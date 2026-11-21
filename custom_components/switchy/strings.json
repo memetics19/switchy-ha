@@ -4,13 +4,27 @@
       "user": {
         "title": "Add a Switchy panel",
         "description": "Enter the panel's device id (on its sticker or from the app) and its address on your network.",
-        "data": {"device_id": "Device id", "host": "Host or IP"}
+        "data": {
+          "device_id": "Device id",
+          "host": "Host or IP"
+        }
       }
     },
     "error": {
       "cannot_connect": "Could not reach a panel at that address.",
       "wrong_device": "That address answers as a different panel."
     },
-    "abort": {"already_configured": "This panel is already added."}
+    "abort": {
+      "already_configured": "This panel is already added."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Name the panel's channels",
+        "description": "Give each channel (L1, L2, ...) a friendly name. Leave blank to keep the default.",
+        "data": {}
+      }
+    }
   }
 }

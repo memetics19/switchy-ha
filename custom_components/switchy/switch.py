@@ -10,14 +10,15 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import CONF_NAMES, DOMAIN
 from .coordinator import SwitchyCoordinator
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     """One switch entity per channel the panel reports."""
     coordinator: SwitchyCoordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities(SwitchyChannel(coordinator, ch) for ch in sorted(coordinator.data, key=lambda c: int(c[1:])))
+    names = entry.options.get(CONF_NAMES, {})
+    async_add_entities(SwitchyChannel(coordinator, ch, names.get(ch)) for ch in sorted(coordinator.data, key=lambda c: int(c[1:])))
 
 
 class SwitchyChannel(CoordinatorEntity[SwitchyCoordinator], SwitchEntity):
@@ -25,12 +26,12 @@ class SwitchyChannel(CoordinatorEntity[SwitchyCoordinator], SwitchEntity):
 
     _attr_has_entity_name = True
 
-    def __init__(self, coordinator: SwitchyCoordinator, channel: str) -> None:
+    def __init__(self, coordinator: SwitchyCoordinator, channel: str, name: str | None = None) -> None:
         super().__init__(coordinator)
         self._channel = channel
         devid = coordinator.panel.devid
         self._attr_unique_id = f"{devid}_{channel}"
-        self._attr_name = channel
+        self._attr_name = name or channel
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, devid)}, name=f"Switchy {devid}", manufacturer="Switchy", model="Touch panel",
         )
