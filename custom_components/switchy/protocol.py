@@ -15,6 +15,7 @@ from __future__ import annotations
 import base64
 import json
 import time
+import urllib.parse
 from dataclasses import dataclass
 
 import aiohttp
@@ -68,10 +69,10 @@ class SwitchyPanel:
         """Set one channel (e.g. 'L3') to a value (0 off, 1 on, or a level), with a clock resync
         retry on 412."""
         for _ in range(2):
-            msg = _encrypt(self.devid, {channel: value, "timestamp": int(time.time())})
+            msg = urllib.parse.quote(_encrypt(self.devid, {channel: value, "timestamp": int(time.time())}), safe="")
             body = await self._get(session, f"offline?mes={msg}")
             if body == "412":
-                ts = _encrypt(self.devid, {"timestamp": int(time.time())})
+                ts = urllib.parse.quote(_encrypt(self.devid, {"timestamp": int(time.time())}), safe="")
                 await self._get(session, f"offline?timesync={ts}")
                 continue
             return {k: int(v) for k, v in json.loads(base64.b64decode(body)).items() if k.startswith("L")}
