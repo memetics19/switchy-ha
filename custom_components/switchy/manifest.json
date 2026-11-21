@@ -4,11 +4,9 @@
   "codeowners": [],
   "config_flow": true,
   "documentation": "https://github.com/memetics19/switchy-ha",
+  "integration_type": "hub",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/memetics19/switchy-ha/issues",
-  "requirements": [
-    "cryptography>=41.0.0"
-  ],
-  "version": "0.1.1",
-  "integration_type": "hub"
+  "requirements": [],
+  "version": "0.1.1"
 }
