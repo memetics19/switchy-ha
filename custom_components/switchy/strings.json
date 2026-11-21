@@ -1,0 +1,16 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a Switchy panel",
+        "description": "Enter the panel's device id (on its sticker or from the app) and its address on your network.",
+        "data": {"device_id": "Device id", "host": "Host or IP"}
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach a panel at that address.",
+      "wrong_device": "That address answers as a different panel."
+    },
+    "abort": {"already_configured": "This panel is already added."}
+  }
+}
