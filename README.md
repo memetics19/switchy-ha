@@ -1,5 +1,7 @@
 # Switchy for Home Assistant
 
+<img src="logo.png" alt="Switchy" height="80">
+
 A local-only Home Assistant integration for [Switchy](https://switchy.in) ESP32 touch panels.
 It talks to each panel over your LAN, with no cloud and no vendor app in the loop.
 
@@ -50,3 +52,7 @@ the same LAN can control it. Put the panels on a trusted network segment.
 ## License
 
 MIT. Not affiliated with [Switchy](https://switchy.in); "Switchy" refers to the panels this talks to.
+
+## Brand icons
+
+The icon in Home Assistant comes from the [home-assistant/brands](https://github.com/home-assistant/brands) repository. The files for a brands PR are under `brands/custom_integrations/switchy/` (`icon.png` 256x256, `logo.png`). Until that PR is merged, Home Assistant shows a placeholder.
