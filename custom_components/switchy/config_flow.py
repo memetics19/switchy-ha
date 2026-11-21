@@ -9,7 +9,7 @@ from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResu
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import CONF_DEVICE_ID, CONF_HOST, CONF_NAMES, DOMAIN
+from .const import CONF_DEVICE_ID, CONF_HOST, CONF_NAMES, CONF_TYPES, DOMAIN
 from .protocol import SwitchyError, SwitchyPanel
 
 
@@ -52,12 +52,15 @@ class SwitchyOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         if user_input is not None:
             names = {k[5:]: v.strip() for k, v in user_input.items() if k.startswith("name_") and v.strip()}
-            return self.async_create_entry(title="", data={CONF_NAMES: names})
+            types = {k[5:]: v for k, v in user_input.items() if k.startswith("type_") and v == "fan"}
+            return self.async_create_entry(title="", data={CONF_NAMES: names, CONF_TYPES: types})
 
         coordinator = self.hass.data[DOMAIN][self.config_entry.entry_id]
-        existing = self.config_entry.options.get(CONF_NAMES, {})
+        names = self.config_entry.options.get(CONF_NAMES, {})
+        types = self.config_entry.options.get(CONF_TYPES, {})
         channels = sorted(coordinator.data, key=lambda c: int(c[1:]))
-        schema = vol.Schema(
-            {vol.Optional(f"name_{ch}", default=existing.get(ch, "")): str for ch in channels}
-        )
-        return self.async_show_form(step_id="init", data_schema=schema)
+        fields: dict[Any, Any] = {}
+        for ch in channels:
+            fields[vol.Optional(f"name_{ch}", default=names.get(ch, ""))] = str
+            fields[vol.Optional(f"type_{ch}", default=types.get(ch, "switch"))] = vol.In(["switch", "fan"])
+        return self.async_show_form(step_id="init", data_schema=vol.Schema(fields))

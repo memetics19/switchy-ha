@@ -9,7 +9,7 @@ from .const import CONF_DEVICE_ID, CONF_HOST, DOMAIN
 from .coordinator import SwitchyCoordinator
 from .protocol import SwitchyPanel
 
-PLATFORMS: list[Platform] = [Platform.SWITCH]
+PLATFORMS: list[Platform] = [Platform.FAN, Platform.SWITCH]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

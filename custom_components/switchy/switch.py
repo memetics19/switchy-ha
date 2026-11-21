@@ -10,7 +10,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import CONF_NAMES, DOMAIN
+from .const import CONF_NAMES, CONF_TYPES, DOMAIN
 from .coordinator import SwitchyCoordinator
 
 
@@ -18,7 +18,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     """One switch entity per channel the panel reports."""
     coordinator: SwitchyCoordinator = hass.data[DOMAIN][entry.entry_id]
     names = entry.options.get(CONF_NAMES, {})
-    async_add_entities(SwitchyChannel(coordinator, ch, names.get(ch)) for ch in sorted(coordinator.data, key=lambda c: int(c[1:])))
+    types = entry.options.get(CONF_TYPES, {})
+    channels = [ch for ch in sorted(coordinator.data, key=lambda c: int(c[1:])) if types.get(ch) != "fan"]
+    async_add_entities(SwitchyChannel(coordinator, ch, names.get(ch)) for ch in channels)
 
 
 class SwitchyChannel(CoordinatorEntity[SwitchyCoordinator], SwitchEntity):
