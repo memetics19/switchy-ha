@@ -5,8 +5,10 @@ It talks to each panel over your LAN, with no cloud and no vendor app in the loo
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=memetics19&repository=switchy-ha&category=integration)
 
-One click on the badge adds this repository to [HACS](https://hacs.xyz) on your own Home
-Assistant. Then install Switchy and restart.
+One click adds this repository to [HACS](https://hacs.xyz) on your own Home Assistant. Install
+Switchy and restart, then add it with one click:
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=switchy)
 
 Each panel channel appears as a switch entity. Control is immediate and polling keeps the state
 in sync.
