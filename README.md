@@ -1,7 +1,12 @@
 # Switchy for Home Assistant
 
-A local-only Home Assistant integration for Switchy ESP32 touch panels. It talks to each panel
-over your LAN, with no cloud and no vendor app in the loop.
+A local-only Home Assistant integration for [Switchy](https://switchy.in) ESP32 touch panels.
+It talks to each panel over your LAN, with no cloud and no vendor app in the loop.
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=memetics19&repository=switchy-ha&category=integration)
+
+One click on the badge adds this repository to [HACS](https://hacs.xyz) on your own Home
+Assistant. Then install Switchy and restart.
 
 Each panel channel appears as a switch entity. Control is immediate and polling keeps the state
 in sync.
@@ -42,4 +47,4 @@ the same LAN can control it. Put the panels on a trusted network segment.
 
 ## License
 
-MIT. Not affiliated with Switchy; "Switchy" refers to the panels this talks to.
+MIT. Not affiliated with [Switchy](https://switchy.in); "Switchy" refers to the panels this talks to.
